@@ -15,7 +15,7 @@ public class ChimeConfig {
                 "Kty1cr9EPqs10VwlomdYx/r5x/YEyBx/o40zWFU+");
 
         AmazonChime chime = AmazonChimeClient.builder()
-                .withCredentials(new AWSStaticCredentialsProvider(creds)).build();
+                .withCredentials(new AWSStaticCredentialsProvider(creds)).withRegion("us-east-1").build();
         return chime;
     }
 }
