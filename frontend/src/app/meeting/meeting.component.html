@@ -1,0 +1,18 @@
+<div style="width: 100%;  text-align:center; margin: 0 auto;">
+  <label style="color:blueviolet;font-size: 50px;font-weight: bold;align-items: center;">Video Meet!</label>
+</div>
+<audio style="display: none" id="meeting-audio"></audio>
+<div style="width: 100%;  text-align:center; margin: 0 auto;">
+  User Name: <input id="username" name="username" type="text" value=""/>
+  <button type="button" (click)="startMeet()" id="start-button">Start Meeting</button>
+  <button type="button" id="stop-button">Stop Meeting</button>
+  <button type="button" id="exit-button">Exit Meeting</button>
+  <button type="button" id="share-button">Screen Share</button>
+</div>
+<br>
+<b style="color:blueviolet;">Meeting Id:</b> <label id="meeting-Id"></label><br>
+<b style="color:blueviolet;">Meeting Link:</b> <label id="meeting-link"></label><br>
+<b style="color:blueviolet;">Attendees:</b> <label id="Attendees"></label>
+<hr>
+<div id="video-list"></div>
+<script src="assets/vid.js"></script>

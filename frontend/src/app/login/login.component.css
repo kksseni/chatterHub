@@ -1,0 +1,29 @@
+.logo{
+    height: 5rem;
+}
+.bg-orange{
+    background-color: #f9951d;
+    color: black;
+}
+.c-orange{
+    color: #f9951d;
+}
+.bg-space{
+    background-image: url("https://wallpaperset.com/w/full/9/3/3/336115.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.bg-space::before{
+    background-color: rgba(0, 0, 0, 0.68);
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+.muted-white{
+    color: rgba(255,255,255,0.67);
+}
+.btn:disabled{
+    background-color: #f9951d;
+}
