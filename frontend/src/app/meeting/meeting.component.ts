@@ -7,6 +7,7 @@ import {
   MeetingSessionStatus,
   MeetingSessionStatusCode, VideoTileState
 } from "amazon-chime-sdk-js";
+import {ActivatedRoute, Router} from "@angular/router";
 @Component({
   selector: 'app-meeting',
   templateUrl: './meeting.component.html',
@@ -17,7 +18,7 @@ export class MeetingComponent implements OnInit {
   @ViewChild('videoElement') videoElement: ElementRef;
   // @ts-ignore
   @ViewChild('remoteVideoElement') remoteVideoElement: ElementRef;
-  constructor(private meetService: MeetService) { }
+  constructor(private meetService: MeetService, private route: ActivatedRoute, private router: Router) { }
 
   meetingId: string | undefined;
   res: any;
@@ -104,5 +105,9 @@ export class MeetingComponent implements OnInit {
         }
       },
     });
+  }
+
+  join() {
+    this.router.navigate([`/meets/${this.meetingId}`], { relativeTo: this.route });
   }
 }

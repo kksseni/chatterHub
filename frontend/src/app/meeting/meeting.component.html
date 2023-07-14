@@ -1,13 +1,36 @@
-<div *ngIf="!meetingId">
-  <button (click)="createMeeting()">Create Meeting</button>
-</div>
-<div *ngIf="meetingId">
-  <h2>Meeting ID: {{ meetingId }}</h2>
-  <input [(ngModel)]="name" placeholder="Enter your name" />
-  <button (click)="joinMeeting()">Join Meeting</button>
-</div>
-<div *ngIf="attendeeId">
-  <h2>Welcome, {{ name }}!</h2>
-  <video #videoElement [srcObject]="localStream" autoplay muted></video>
-  <video #remoteVideoElement *ngFor="let attendee of attendees" [srcObject]="attendee.stream" autoplay></video>
+<div class="home-page">
+  <span class="h1 fw-bold mb-3"><img height="70wmax" width="250wmax" src="https://s3.amazonaws.com/cars-storage-xenia-s.implemica.com/chattyHubLogo.png"
+                                     class="img-fluid logo" /></span>
+  <div class="body">
+    <div class="left-side">
+      <div class="content">
+        <h2>Premium video meetings. Now free for everyone.</h2>
+        <p>
+          We re-engineered the service we built for secure business
+          meetings, Google Meet, to make it free and available for all.
+        </p>
+        <div class="action-btn">
+          <button class="btn orange" onClick="startCall()">
+            <span class="icon-block"><i class="fas fa-video"></i></span>
+            New Meeting
+          </button>
+          <div class="input-block">
+            <div class="input-section">
+              <span class="icon-block"><i class="fas fa-keyboard"></i></span>
+              <input [(ngModel)]="meetingId" placeholder="Enter a code or link" />
+            </div>
+            <button class="btn no-bg border" (click)="join()">Join</button>
+          </div>
+        </div>
+      </div>
+      <div class="help-text">
+        <a href="">Learn more</a> about Chatty Meet
+      </div>
+    </div>
+    <div class="right-side">
+      <div class="content">
+        <img src="https://www.gstatic.com/meet/google_meet_marketing_ongoing_meeting_grid_427cbb32d746b1d0133b898b50115e96.jpg" alt="Google Meet" />
+      </div>
+    </div>
+  </div>
 </div>

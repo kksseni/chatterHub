@@ -1,0 +1,15 @@
+<div class="frame-header">
+  <div class="header-items icon-block">
+    <i class="icon fas fa-user-friends"></i>
+  </div>
+  <div class="header-items icon-block" (click)="setIsMessenger(true); setMessageAlert({})">
+    <i class="icon fas fa-comment-alt"></i>
+    <ng-container *ngIf="!isMessenger && messageAlert.alert">
+      <span class="alert-circle-icon"></span>
+    </ng-container>
+  </div>
+  <div class="header-items date-block">Daily</div>
+  <div class="header-items icon-block">
+    <i class="icon profile fas fa-user-circle"></i>
+  </div>
+</div>

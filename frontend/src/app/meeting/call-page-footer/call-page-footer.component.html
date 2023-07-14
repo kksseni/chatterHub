@@ -1,0 +1,43 @@
+<div class="footer-item">
+  <div class="left-item">
+    <div class="icon-block">
+      Meeting details
+      <i class="icon fas fa-angle-up"></i>
+    </div>
+  </div>
+  <div class="center-item">
+    <div
+      class="icon-block"
+      [ngClass]="{'red-bg': !isAudio}"
+      (click)="toggleAudio(!isAudio)"
+    >
+      <i class="icon" [ngClass]="{'fas fa-microphone': isAudio, 'fas fa-microphone-slash': !isAudio}"></i>
+    </div>
+    <div class="icon-block" (click)="disconnectCall()">
+      <i class="icon fas fa-phone red"></i>
+    </div>
+    <div class="icon-block">
+      <i class="icon fas fa-video"></i>
+    </div>
+    <div class="icon-block">
+      <i class="icon fas fa-closed-captioning red"></i>
+      <p class="title" title="Turn on captions"></p>
+    </div>
+
+    <ng-container *ngIf="isPresenting; else presentNow">
+      <div class="icon-block" (click)="stopScreenShare()">
+        <i class="icon fas fa-desktop red"></i>
+        <p class="title" title="Stop presenting"></p>
+      </div>
+    </ng-container>
+
+    <ng-template #presentNow>
+      <div class="icon-block" (click)="screenShare()">
+        <i class="icon fas fa-desktop red"></i>
+        <p class="title" title="Present now"></p>
+      </div>
+    </ng-template>
+  </div>
+  <div class="right-item">
+  </div>
+</div>

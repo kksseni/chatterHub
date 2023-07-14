@@ -20,6 +20,7 @@
     "@angular/router": "^14.2.0",
     "@types/offscreencanvas": "^2019.7.0",
     "rxjs": "~7.5.0",
+    "simple-peer": "^9.11.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
@@ -27,6 +28,7 @@
     "@angular-devkit/build-angular": "^14.2.4",
     "@angular/cli": "~14.2.4",
     "@angular/compiler-cli": "^14.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@types/jasmine": "~4.0.0",
     "@types/styled-components": "^5.1.26",
     "@types/styled-system": "^5.1.16",

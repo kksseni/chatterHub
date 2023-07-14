@@ -9,10 +9,14 @@ import {LoginService} from "./login/login.service";
 import { MeetingComponent } from './meeting/meeting.component';
 import {RouterModule, Routes} from "@angular/router";
 import { ChatsComponent } from './chats/chats.component';
+import { CallPageHeaderComponent } from './meeting/call-page-header/call-page-header.component';
+import { CallPageFooterComponent } from './meeting/call-page-footer/call-page-footer.component';
+import { CallPageComponent } from './meeting/call-page/call-page.component';
 
 const appRoutes: Routes = [
   {path: '',redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
+  {path: 'meets/:id', component: CallPageComponent},
   {path: 'chats', component: ChatsComponent},
   {path: 'meets', component: MeetingComponent}
 ]
@@ -22,7 +26,10 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     MeetingComponent,
-    ChatsComponent
+    ChatsComponent,
+    CallPageHeaderComponent,
+    CallPageFooterComponent,
+    CallPageComponent
   ],
     imports: [
         BrowserModule,
