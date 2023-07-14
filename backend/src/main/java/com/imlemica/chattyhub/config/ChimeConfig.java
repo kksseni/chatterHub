@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 public class ChimeConfig {
     @Bean
     public AmazonChime chime(){
-        BasicAWSCredentials creds = new BasicAWSCredentials("AKIA4M6UWAPSOFCING4Z",
-                "Kty1cr9EPqs10VwlomdYx/r5x/YEyBx/o40zWFU+");
+        BasicAWSCredentials creds = new BasicAWSCredentials(System.getenv("ACCESS_KEY"),
+                System.getenv("SECRET_KEY"));
 
         AmazonChime chime = AmazonChimeClient.builder()
                 .withCredentials(new AWSStaticCredentialsProvider(creds)).withRegion("us-east-1").build();
