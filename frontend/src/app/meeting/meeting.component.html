@@ -1,21 +1,13 @@
-<div style="width: 100%;  text-align:center; margin: 0 auto;">
-  <label style="color:blueviolet;font-size: 50px;font-weight: bold;align-items: center;">Video Meet!</label>
+<div *ngIf="!meetingId">
+  <button (click)="createMeeting()">Create Meeting</button>
 </div>
-<audio style="display: none" id="meeting-audio"></audio>
-<div style="width: 100%;  text-align:center; margin: 0 auto;">
-  User Name: <input id="username" name="username" type="text" value=""/>
-  <button type="button" (click)="startMeet()" id="start-button">Start Meeting</button>
-  <button type="button" id="stop-button">Stop Meeting</button>
-  <button type="button" id="exit-button">Exit Meeting</button>
-  <button type="button" id="share-button">Screen Share</button>
+<div *ngIf="meetingId">
+  <h2>Meeting ID: {{ meetingId }}</h2>
+  <input [(ngModel)]="name" placeholder="Enter your name" />
+  <button (click)="joinMeeting()">Join Meeting</button>
 </div>
-<br>
-<b style="color:blueviolet;">Meeting Id:</b> <label id="meeting-Id"></label><br>
-<b style="color:blueviolet;">Meeting Link:</b> <label id="meeting-link"></label><br>
-<b style="color:blueviolet;">Attendees:</b> <label id="Attendees"></label>
-<hr>
-<div id="video-list"></div>
-<div class="ov-video">
-  <video #videoElement></video>
+<div *ngIf="attendeeId">
+  <h2>Welcome, {{ name }}!</h2>
+  <video #videoElement [srcObject]="localStream" autoplay muted></video>
+  <video #remoteVideoElement *ngFor="let attendee of attendees" [srcObject]="attendee.stream" autoplay></video>
 </div>
-<script src="assets/vid.js"></script>

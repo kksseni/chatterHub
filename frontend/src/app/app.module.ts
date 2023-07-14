@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {LoginService} from "./login/login.service";
 import { MeetingComponent } from './meeting/meeting.component';
@@ -24,12 +24,13 @@ const appRoutes: Routes = [
     MeetingComponent,
     ChatsComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    RouterModule.forRoot(appRoutes),
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        RouterModule.forRoot(appRoutes),
+        ReactiveFormsModule,
+        FormsModule
+    ],
   providers: [LoginService],
   bootstrap: [AppComponent]
 })
