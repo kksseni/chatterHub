@@ -1,5 +1,42 @@
-<div class="callpage-container">
-  <app-call-page-header></app-call-page-header>
-  <video class="video-container" src="" controls></video>
-  <app-call-page-footer></app-call-page-footer>
+<div class="back-black bg-space">
+<div class="header">
+ <span class="h1 fw-bold mb-3"><img height="70wmax" width="250wmax" src="https://s3.amazonaws.com/cars-storage-xenia-s.implemica.com/chattyHubLogo.png"
+                                    class="img-fluid logo" /></span>
+</div>
+<div class="container">
+  <div class="preview">
+    <div class="video-preview">
+      <video class="video-preview" [srcObject]="localStream" width="730" height="550" autoplay></video>
+    </div>
+      <!-- Replace the src attribute with a sample video or image -->
+    <div class="buttons-section">
+      <button type="button" (click)="turnAudio()" [class.orange]="!isAudio" class="btn btn-default btn-circle btn-xl">
+        <i *ngIf="isAudio" class="fa-solid fa-microphone"></i>
+        <i *ngIf="!isAudio" class="fa-solid fa-microphone-slash"></i>
+      </button>
+      <button type="button" (click)="turnVideo()" [class.orange]="!isVideo" class="btn btn-default btn-circle btn-xl">
+        <i *ngIf="isVideo" class="fa-solid fa-video"></i>
+        <i *ngIf="!isVideo" class="fa-solid fa-video-slash"></i>
+      </button>
+    </div>
+  </div>
+  <div class="meeting-info">
+    <h1>Join the Meeting</h1>
+    <div class="meeting-details">
+      <div class="meeting-detail">
+        <span>Date:</span>
+        <span>July 18, 2023</span>
+      </div>
+      <div class="meeting-detail">
+        <span>Time:</span>
+        <span>3:00 PM</span>
+      </div>
+      <div class="meeting-detail">
+        <span>Meeting ID:</span>
+        <span>abcdef12345</span>
+      </div>
+    </div>
+    <button class="join-btn">Join Now</button>
+  </div>
+</div>
 </div>

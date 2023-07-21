@@ -5,3 +5,174 @@
   position: absolute;
   z-index: -1;
 }
+
+.back-black {
+  background-color: black;
+  min-height: 100vh;
+}
+
+.buttons-section {
+  justify-content: center;
+  width: 100%;
+  z-index: 1;
+  margin-top: -150px;
+  position: relative;
+  display: -ms-inline-flexbox;
+  flex-direction: column;
+  text-align: center;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg); /* Safari and Chrome */
+  -moz-transform: rotateY(180deg); /* Firefox */
+}
+
+.btn-default {
+  margin-right: 15px;
+  border: 2px solid #000000;
+  background-color: rgba(255, 138, 0, 0.36);
+  color: #000000;
+}
+.btn-default:hover {
+  background-color: rgba(255, 138, 0, 0.57);
+ cursor: pointer;
+}
+.orange {
+  background-color: rgba(249, 149, 29, 0.6) !important;
+  color: #000000 !important;
+  border-color: #000000;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 45px;
+  font-size: 24px;
+  line-height: 1.33;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+.logo {
+  padding-left: 30px;
+  padding-top: 30px;
+}
+
+.container {
+  width: 90%;
+  height: 500px;
+  max-width: 100%;
+  display: flex;
+  margin: 3% auto;
+  border: 1px solid #f9951d;
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(249, 149, 29, 0.85);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.header img {
+  display: flex;
+  flex-direction: column;
+  max-width: 250px;
+  margin: 0 0;
+}
+
+.bg-space {
+  background-image: url("https://wallpaperset.com/w/full/9/3/3/336115.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.preview {
+  justify-content: center;
+  background-color: #000000;
+  border-radius: 0 10px 10px 0;
+  overflow: hidden;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg); /* Safari and Chrome */
+  -moz-transform: rotateY(180deg); /* Firefox */
+}
+
+#video .video-preview{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1000;
+  overflow: hidden;
+  border: 2px solid red;
+}
+
+.meeting-info {
+  width: 100%;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  margin: auto 10%;
+}
+
+.meeting-info h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #f9951d;
+}
+
+.meeting-details {
+  color: #cccccc;
+  font-size: 18px;
+  margin-top: 30px;
+  align-items: center;
+}
+
+.meeting-detail {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.meeting-detail span {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.join-btn {
+  background-color: #f9951d;
+  color: #000000;
+  border: none;
+  padding: 12px 25px;
+  font-size: 18px;
+  font-weight: bolder;
+  cursor: pointer;
+  border-radius: 30px;
+  margin-top: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.join-btn:hover {
+  color: #000000;
+  background-color: #ff8a00;
+}
+
+@media (max-width: 480px) {
+  .preview {
+    flex-direction: column;
+  }
+
+  .video-preview {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .meeting-info {
+    padding: 20px;
+  }
+}

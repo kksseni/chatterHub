@@ -1,8 +1,8 @@
 package com.imlemica.chattyhub.service;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.chime.AmazonChime;
 import com.amazonaws.services.chime.model.*;
-import com.imlemica.chattyhub.domain.MeetConfigData;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,37 +11,33 @@ import org.springframework.stereotype.Service;
 public class ChimeServiceImpl implements ChimeService {
     private final AmazonChime chime;
 
-    public CreateAttendeeResult createAttendee(String meetingId, String userId) {
+    public Attendee createAttendee(String meetingId, String userId) {
         CreateAttendeeResult attendee = chime.createAttendee(new CreateAttendeeRequest()
                 .withExternalUserId(userId)
                 .withMeetingId(meetingId));
-        return attendee;
+        return attendee.getAttendee();
     }
 
     @Override
-    public CreateMeetingResult createMeeting() {
+    public Meeting createMeeting() {
         chime.createMeeting(new CreateMeetingRequest());
         CreateMeetingResult account = chime.createMeeting(new CreateMeetingRequest()
                 .withClientRequestToken("AXEXAMPLE")
                 .withMediaRegion("us-east-2")
                 .withExternalMeetingId("AXEXAMPLE"));
 
-        return account;
+        return account.getMeeting();
     }
 
     @Override
-    public MeetConfigData joinMeeting(String meetingId, String userId) {
-        Meeting meeting = new Meeting();
-        if(meetingId == null){
-            CreateMeetingResult createMeetingResult = createMeeting();
-            meeting = createMeetingResult.getMeeting();
-            meetingId = createMeetingResult.getMeeting().getMeetingId();
+    public GetMeetingResult isExist(String meetingId) {
+        GetMeetingRequest meetingRequest = new GetMeetingRequest().withMeetingId(meetingId);
+        GetMeetingResult meeting;
+        try {
+            meeting = chime.getMeeting(meetingRequest);
+        } catch (AmazonServiceException ex) {
+            throw new NotFoundException(String.format("Meeting with id %s does not exist", meetingId));
         }
-
-        CreateAttendeeResult createAttendeeResult = createAttendee(meetingId, userId);
-        Attendee attendee = createAttendeeResult.getAttendee();
-        MeetConfigData configData = MeetConfigData.builder().attendee(attendee).meeting(meeting).build();
-
-        return configData;
+        return meeting;
     }
 }
