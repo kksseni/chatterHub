@@ -12,13 +12,15 @@ import { ChatsComponent } from './chats/chats.component';
 import { CallPageHeaderComponent } from './meeting/call-page-header/call-page-header.component';
 import { CallPageFooterComponent } from './meeting/call-page-footer/call-page-footer.component';
 import { CallPageComponent } from './meeting/call-page/call-page.component';
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 
 const appRoutes: Routes = [
   {path: '',redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'meets/:id', component: CallPageComponent},
   {path: 'chats', component: ChatsComponent},
-  {path: 'meets', component: MeetingComponent}
+  {path: 'meets', component: MeetingComponent},
+  {path: '**', pathMatch: 'full', component: NotFoundPageComponent}
 ]
 
 @NgModule({
@@ -29,7 +31,8 @@ const appRoutes: Routes = [
     ChatsComponent,
     CallPageHeaderComponent,
     CallPageFooterComponent,
-    CallPageComponent
+    CallPageComponent,
+    NotFoundPageComponent
   ],
     imports: [
         BrowserModule,
