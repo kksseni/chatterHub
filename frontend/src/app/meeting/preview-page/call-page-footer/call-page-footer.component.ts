@@ -1,4 +1,4 @@
-import { Component, OnInit , Input} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { faVideo, faMicrophone, faPhone, faAngleUp, faClosedCaptioning, faDesktop, faMicrophoneSlash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -9,6 +9,9 @@ import { faVideo, faMicrophone, faPhone, faAngleUp, faClosedCaptioning, faDeskto
 export class CallPageFooterComponent {
   @Input() isPresenting: boolean | undefined;
   @Input() isAudio: boolean | undefined;
+  @Input() isVideo: boolean | undefined;
+  @Output() isAudioChange = new EventEmitter<boolean>();
+  @Output() isVideoChange = new EventEmitter<boolean>();
 
   faVideo = faVideo;
   faMicrophone = faMicrophone;
@@ -18,8 +21,13 @@ export class CallPageFooterComponent {
   faDesktop = faDesktop;
   faMicrophoneSlash = faMicrophoneSlash;
 
-  toggleAudio(isAudio: boolean) {
-    // Implement your toggleAudio function logic here
+  toggleAudio() {
+   this.isAudio = !this.isAudio
+    this.isAudioChange.emit(this.isAudio);
+  }
+  toggleVideo() {
+    this.isVideo = !this.isVideo
+    this.isVideoChange.emit(this.isVideo);
   }
 
   disconnectCall() {

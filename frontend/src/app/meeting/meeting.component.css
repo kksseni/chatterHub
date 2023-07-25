@@ -63,7 +63,12 @@
 .home-page .body .left-side .content .action-btn .btn .icon-block {
   padding-right: 10px;
 }
-
+.title{
+  line-height: 3.25rem!important;
+  font-size: 2.75rem!important;
+  letter-spacing: 0;
+  font-weight: 400;
+}
 .home-page .body .left-side .content .action-btn .btn:hover {
   color: black;
   background: #f9951d;

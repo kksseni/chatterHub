@@ -9,7 +9,8 @@ import {
   VideoTileState
 } from "amazon-chime-sdk-js";
 import {ActivatedRoute, Router} from "@angular/router";
-import {CallPageComponent} from "./call-page/call-page.component";
+import {CallPageComponent} from "./preview-page/call-page/call-page.component";
+import {PreviewPageComponent} from "./preview-page/preview-page.component";
 
 @Component({
   selector: 'app-meeting',
@@ -22,11 +23,8 @@ export class MeetingComponent implements OnInit {
 
   meetingId: string | undefined;
   resMeet: any;
-  resAttendee: any;
-  attendeeId: string | undefined;
   name: string | undefined;
   localStream: MediaStream | undefined;
-  attendees: { attendeeId: string; stream: MediaStream }[] = [];
   //_streamManager: StreamManager;
   ngOnInit(): void {
   }
@@ -43,13 +41,6 @@ export class MeetingComponent implements OnInit {
     });
   }
 
-  async joinMeeting() {
-    CallPageComponent.attendeeId = this.attendeeId
-    CallPageComponent.cofg = new MeetingSessionConfiguration(
-      this.resMeet,
-      this.resAttendee
-    );
-  }
 
   join() {
     console.log("meet ="+ this.meetingId)
@@ -63,17 +54,6 @@ export class MeetingComponent implements OnInit {
 
   async newCall() {
     await this.createMeeting()
-    this.createAttendee();
-    await this.joinMeeting();
     await this.router.navigate([`/meets/${this.meetingId}`], {relativeTo: this.route});
-  }
-
-  private createAttendee() {
-    this.meetService.newAttendee(this.meetingId).subscribe(async (res: Object) => {
-      // @ts-ignore
-      this.attendeeId = res.attendeeId;
-      console.log("this.attendeeId =" +  this.attendeeId)
-      this.resAttendee = res;
-  })
   }
 }

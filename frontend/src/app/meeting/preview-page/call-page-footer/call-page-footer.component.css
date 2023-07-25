@@ -1,5 +1,5 @@
 .footer-item {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -98,7 +98,6 @@
 
 .footer-item .right-item .icon-block .icon {
   font-size: 20px;
-  margin-bottom: 10px;
 }
 
 .footer-item .right-item .icon-block .title {

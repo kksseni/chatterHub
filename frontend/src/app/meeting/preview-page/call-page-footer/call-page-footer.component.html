@@ -9,15 +9,14 @@
     <div
       class="icon-block"
       [ngClass]="{'red-bg': !isAudio}"
-      (click)="toggleAudio(!isAudio)"
-    >
-      <i class="icon" [ngClass]="{'fas fa-microphone': isAudio, 'fas fa-microphone-slash': !isAudio}"></i>
+      (click)="toggleAudio()">
+      <i class="icon" [ngClass]="{'fas fa-microphone': isAudio, 'fa-solid fa-microphone-slash': !isAudio}"></i>
     </div>
     <div class="icon-block" (click)="disconnectCall()">
       <i class="icon fas fa-phone red"></i>
     </div>
-    <div class="icon-block">
-      <i class="icon fas fa-video"></i>
+    <div (click)="toggleVideo()" class="icon-block" [ngClass]="{'red-bg': !isVideo}">
+      <i class="icon" [ngClass]="{'fas fa-video': isVideo, 'fa-solid fa-video-slash': !isVideo}"></i>
     </div>
     <div class="icon-block">
       <i class="icon fas fa-closed-captioning red"></i>

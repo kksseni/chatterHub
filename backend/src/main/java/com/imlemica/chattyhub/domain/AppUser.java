@@ -21,7 +21,10 @@ public class AppUser {
     Long id;
 
     @Column
-    String name;
+    String firstname;
+
+    @Column
+    String lastname;
 
     @Column
     String email;

@@ -21,8 +21,8 @@ public class UsersData {
     public void addUsers(){
         Role role_user = repository.save(Role.builder().name("ROLE_USER").build());
         List<Role> roleList = List.of(role_user);
-        userService.saveUser(AppUser.builder().name("admin").email("admin").roles(roleList).password("admin").build());
-        userService.saveUser(AppUser.builder().name("user").email("user").roles(roleList).password("user").build());
-        userService.saveUser(AppUser.builder().name("kseni").email("kseni").roles(roleList).password("kseni").build());
+        userService.saveUser(AppUser.builder().firstname("Admin").lastname("Lastname").email("admin").roles(roleList).password("admin").build());
+        userService.saveUser(AppUser.builder().firstname("User").lastname("Lastname").email("user").roles(roleList).password("user").build());
+        userService.saveUser(AppUser.builder().firstname("Kseni").lastname("Lastname").email("kseni").roles(roleList).password("kseni").build());
     }
 }

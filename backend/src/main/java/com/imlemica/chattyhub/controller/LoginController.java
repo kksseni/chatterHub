@@ -26,11 +26,9 @@ public class LoginController {
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE,  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AppUser> login(@RequestBody Login login) {
         log.info(format("User with email %s try to do login", login.getEmail()));
-
         String token = loginService.doLogin(login.getEmail(),login.getPassword());
-        String userName= userService.findUserByEmail(login.getEmail()).getName();
-
-        AppUser user = AppUser.builder().password(login.getPassword()).email(login.getEmail()).name(userName).token(token).build();
+        AppUser user = userService.findUserByEmail(login.getEmail());
+        user.setToken(token);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

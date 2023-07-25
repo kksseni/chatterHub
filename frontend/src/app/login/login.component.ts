@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
     this.loginService.login({email: this.form.value.email, password: this.form.value.password}).subscribe((res: User) => {
         console.log("User = "+res);
         localStorage.setItem('access_token', res.token);
-        localStorage.setItem('name', res.name);
+        localStorage.setItem('fname', res.firstname);
+        localStorage.setItem('lname', res.lastname);
         this.router.navigate(['/meets'], { relativeTo: this.route });
         console.log("User = "+res);
       },
