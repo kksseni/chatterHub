@@ -10,8 +10,10 @@ export class CallPageFooterComponent {
   @Input() isPresenting: boolean | undefined;
   @Input() isAudio: boolean | undefined;
   @Input() isVideo: boolean | undefined;
+  @Input() isCall: boolean | undefined;
   @Output() isAudioChange = new EventEmitter<boolean>();
   @Output() isVideoChange = new EventEmitter<boolean>();
+  @Output() isCallChange = new EventEmitter<boolean>();
 
   faVideo = faVideo;
   faMicrophone = faMicrophone;
@@ -31,7 +33,8 @@ export class CallPageFooterComponent {
   }
 
   disconnectCall() {
-    // Implement your disconnectCall function logic here
+    this.isCall = !this.isCall
+    this.isCallChange.emit(this.isCall);
   }
 
   stopScreenShare() {

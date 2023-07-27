@@ -24,7 +24,11 @@ public class MeetingController {
         Attendee attendee = chimeService.createAttendee(meetingId, userId);
         return new ResponseEntity<>(attendee, HttpStatus.OK);
     }
-
+    @PostMapping(value = "/delete", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,  produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deleteAttendee(@RequestPart String attendeeId, @RequestPart String meetingId) {
+        chimeService.deleteAttendee(meetingId, attendeeId);
+        return new ResponseEntity<>("Success deleting", HttpStatus.OK);
+    }
     @PostMapping(value = "/check",  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Meeting> checkMeet(@RequestPart String meetingId) {
         Meeting meeting = chimeService.isExist(meetingId).getMeeting();

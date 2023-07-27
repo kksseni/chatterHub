@@ -213,11 +213,24 @@
   transition: background-color 0.3s ease;
 }
 
-.join-btn:hover {
+.join-btn:hover{
   color: #000000;
   background-color: #ff8a00;
 }
-
+.user-title{
+  position: absolute;
+  font-size: 75px;
+  margin: auto;
+  color: white;
+  background-color: #4cd137!important;
+  border-radius: 50%;
+  justify-content: center;
+  padding: 3.2rem 4rem;
+  text-align: center;
+  z-index: 0;
+  top: 40%;
+  left: 43%;
+}
 @media (max-width: 480px) {
   .preview {
     flex-direction: column;

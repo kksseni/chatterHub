@@ -102,6 +102,7 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
 
   async prepare() {
     console.log("this.isAudio=" + this.isAudio)
+    console.log("this.attendeeId =" + PreviewPageComponent.attendeeId)
     let ctx = new AudioContext();
     const constraints: MediaStreamConstraints = {audio: this.isAudio, video: this.isVideo};
 

@@ -8,4 +8,6 @@ public interface ChimeService {
     public Meeting createMeeting();
 
     GetMeetingResult isExist(String meetingId);
+
+    void deleteAttendee(String meetingId, String attendeeId);
 }

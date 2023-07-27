@@ -4,10 +4,12 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.chime.AmazonChime;
 import com.amazonaws.services.chime.model.*;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ChimeServiceImpl implements ChimeService {
     private final AmazonChime chime;
 
@@ -39,5 +41,16 @@ public class ChimeServiceImpl implements ChimeService {
             throw new NotFoundException(String.format("Meeting with id %s does not exist", meetingId));
         }
         return meeting;
+    }
+
+    @Override
+    public void deleteAttendee(String meetingId, String attendeeId) {
+        chime.deleteAttendee(new DeleteAttendeeRequest().withAttendeeId(attendeeId).withMeetingId(meetingId));
+        log.info("Delete attendee wit id = "+ attendeeId);
+        ListAttendeesResult attendeesResult = chime.listAttendees(new ListAttendeesRequest().withMeetingId(meetingId));
+        if (attendeesResult.getAttendees().size() == 0){
+            chime.deleteMeeting(new DeleteMeetingRequest().withMeetingId(meetingId));
+            log.info("Delete meeting wit id = "+ meetingId);
+        }
     }
 }

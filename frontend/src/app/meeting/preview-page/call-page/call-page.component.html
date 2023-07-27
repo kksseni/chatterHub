@@ -1,23 +1,28 @@
 <div class="callpage-container">
   <app-call-page-header></app-call-page-header>
   <div class="container row">
-  <div *ngFor="let attendee of getAttendees()" class="col-md-4">
-    <div class="card attendee h-100">
-    <div class="micro-title">
-      <i *ngIf="attendee.stream.getAudioTracks()[0].enabled" class="fa-solid fa-microphone"></i>
-      <i *ngIf="!attendee.stream.getAudioTracks()[0].enabled" class="fa-solid fa-microphone-slash"></i>
-    </div>
-  <video [class.tTdl5d]="getAttendees().length==1"
-         [class.acRNtd]="getAttendees().length>1"
-         [srcObject]="attendee.stream" autoplay></video>
-    <div class="name-title">
-      {{attendee.fname}} {{attendee.lname}}
-    </div>
+    <div *ngFor="let attendee of getAttendees()" class="col-md-4">
+      <div class="attendee h-100">
+        <div class="micro-title">
+          <i *ngIf="attendee.stream.getAudioTracks()[0].enabled" class="fa-solid fa-microphone"></i>
+          <i *ngIf="!attendee.stream.getAudioTracks()[0].enabled" class="fa-solid fa-microphone-slash"></i>
+        </div>
+        <div *ngIf="!attendee.stream.getVideoTracks()[0].enabled" class="user-title">
+          {{attendee.fname.substring(0, 1)}}
+        </div>
+        <video [class.tTdl5d]="getAttendees().length>=1"
+               [class.acRNtd]="getAttendees().length>1"
+               [srcObject]="attendee.stream" autoplay>
+        </video>
+        <div class="name-title">
+          {{attendee.fname}} {{attendee.lname}}
+        </div>
+      </div>
     </div>
   </div>
-  </div>
-  <app-call-page-footer [isAudio]="isAudio" [isVideo]="isVideo"
+  <app-call-page-footer [isAudio]="isAudio" [isVideo]="isVideo" [isCall]="isCall"
                         (isAudioChange)="onIsAudioChange($event)"
+                        (isCallChange)="onIsCallChange($event)"
                         (isVideoChange)="onIsVideoChange($event)"
   ></app-call-page-footer>
 </div>

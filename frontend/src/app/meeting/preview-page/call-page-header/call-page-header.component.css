@@ -9,6 +9,7 @@
   background: #fff;
   border-radius: 0 0 0 10px;
   overflow: hidden;
+  z-index: 10000;
 }
 
 .frame-header .header-items {

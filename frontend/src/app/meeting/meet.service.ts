@@ -15,13 +15,23 @@ export class MeetService {
     return this.http.get<Object>(`${this.apiServiceUrl}/create`);
   }
   public newAttendee(meetingId: string | undefined): Observable<Object>{
-    let name = localStorage.getItem("name")
+    let name = localStorage.getItem("firstname")
     const formData = new FormData();
     // @ts-ignore
     formData.append('userId', name);
     if(meetingId)
     formData.append('meetingId', meetingId);
     return this.http.post<Object>(`${this.apiServiceUrl}/join`, formData);
+  }
+
+  public deleteAttendee(meetingId: string | undefined, attendeeId: string | undefined): Observable<Object>{
+    const formData = new FormData();
+      // @ts-ignore
+    formData.append('meetingId', meetingId);
+      // @ts-ignore
+    formData.append('attendeeId', attendeeId);
+    console.log(`this.meetId = ${meetingId}, this.attendeeId = ${attendeeId}`)
+    return this.http.post<Object>(`${this.apiServiceUrl}/delete`, formData);
   }
 
   checkMeeting(meetingId: string | undefined) : Observable<any>{

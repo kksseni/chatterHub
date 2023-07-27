@@ -5,6 +5,9 @@
   </div>
   <div class="container">
     <div class="preview">
+      <div *ngIf="!isVideo" class="user-title">
+        {{fname?.substring(0, 1)}}
+      </div>
       <div class="video-preview">
         <video #videoElement [srcObject]="localStream" width="1000" height="800" autoplay></video>
       </div>
