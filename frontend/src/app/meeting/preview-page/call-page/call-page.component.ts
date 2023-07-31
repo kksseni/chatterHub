@@ -1,6 +1,15 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {
+  ConsoleLogger, DefaultDeviceController,
+  DefaultMeetingSession,
+  DefaultMessagingSession,
+  LogLevel, MeetingSessionConfiguration,
+  MessagingSessionConfiguration
+} from "amazon-chime-sdk-js";
+
 import {MeetService} from "../../meet.service";
+import {PreviewPageComponent} from "../preview-page.component";
 
 @Component({
   selector: 'app-call-page',
@@ -21,7 +30,7 @@ export class CallPageComponent implements OnInit, OnChanges {
   isAudio: boolean = true;
   isVideo: boolean = true;
   isCall: boolean = true;
-
+  meetingSession: any;
   constructor(private meetService: MeetService, private router: Router, private route: ActivatedRoute) {
   }
 
@@ -37,22 +46,35 @@ export class CallPageComponent implements OnInit, OnChanges {
   }
 
   async prepare() {
-    /* this.stream = await navigator.mediaDevices.getUserMedia({audio: true, video: true});
-     this.stream1 = await navigator.mediaDevices.getUserMedia({audio: true, video: true});
-     this.stream2 = await navigator.mediaDevices.getUserMedia({audio: true, video: true});
-     this.stream3 = await navigator.mediaDevices.getUserMedia({audio: true, video: true});
-     this.stream4 = await navigator.mediaDevices.getUserMedia({audio: true, video: true});
+    const logger = new ConsoleLogger('SDK', LogLevel.INFO);
+    const deviceController = new DefaultDeviceController(logger);
 
-     CallPageComponent.attendees = [
-       {attendeeId: "id5",lname:"Sh", fname:"Kseniia", stream: this.stream },
-       {attendeeId: "id4",lname:"Ann", fname:"Amm", stream: this.stream1 },
-       {attendeeId: "id3",lname:"Ann", fname:"Amm", stream: this.stream2 },
-       {attendeeId: "id2",lname:"Ann", fname:"Amm", stream: this.stream3 },
-       {attendeeId: "id1",lname:"Ann", fname:"Amm", stream: this.stream4 }]*/
+    const configuration = PreviewPageComponent.cofg
+    this.meetingSession = new DefaultMeetingSession(
+      configuration,
+      logger,
+      deviceController
+    );
+
+    const audioInputDevices = await this.meetingSession.audioVideo.listAudioInputDevices();
+    const audioOutputDevices = await this.meetingSession.audioVideo.listAudioOutputDevices();
+    const videoInputDevices = await this.meetingSession.audioVideo.listVideoInputDevices();
+
+    console.log("start")
+    // An array of MediaDeviceInfo objects
+    audioInputDevices.forEach((mediaDeviceInfo: { deviceId: any; label: any; }) => {
+      console.log(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
+    });
+    audioOutputDevices.forEach((mediaDeviceInfo: { deviceId: any; label: any; }) => {
+      console.log(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
+    });
+    videoInputDevices.forEach((mediaDeviceInfo: { deviceId: any; label: any; }) => {
+      console.log(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
+    });
+    console.log("end")
   }
 
   getAttendees() {
-    console.log(CallPageComponent.attendees)
     return CallPageComponent.attendees
   }
 

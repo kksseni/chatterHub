@@ -9,6 +9,7 @@ import {
 import {ActivatedRoute, Router} from "@angular/router";
 import {CallPageComponent} from "./call-page/call-page.component";
 import {MeetService} from "../meet.service";
+import { default as ChimeSDK, MeetingSession } from 'amazon-chime-sdk-js';
 
 @Component({
   selector: 'app-preview-page',
@@ -32,7 +33,7 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
   static attendeeId: string | undefined;
 
   // @ts-ignore
-  cofg: MeetingSessionConfiguration;
+  static cofg: MeetingSessionConfiguration;
   isMessenger: boolean;
   messageAlert: any;
   resAttendee: any;
@@ -80,11 +81,12 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
     console.log("meet = " + this.meetingId)
     this.createAttendee();
 
-    this.cofg = new MeetingSessionConfiguration(
+    PreviewPageComponent.cofg = new MeetingSessionConfiguration(
       PreviewPageComponent.resMeeting,
       this.resAttendee
     );
     this.prepare()
+
   }
 
   ngOnDestroy() {
@@ -120,20 +122,13 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
     this.localStream = this.stream;
     const logger = new ConsoleLogger('ChimeMeeting', LogLevel.INFO);
     const deviceController = new DefaultDeviceController(logger);
-    this.meetingSession = new DefaultMeetingSession(this.cofg, logger, deviceController);
+    PreviewPageComponent.cofg
+    this.meetingSession = new DefaultMeetingSession(PreviewPageComponent.cofg, logger, deviceController);
   }
 
   async joinMeeting() {
-    console.log("joinMeeting()")
-    // Add the local stream to the attendee's list
-    if (PreviewPageComponent.attendeeId) {
-      // @ts-ignore
-      CallPageComponent.attendees.push({attendeeId: PreviewPageComponent.attendeeId, lname: this.lname, fname: this.fname, stream: this.localStream});
-    }
-
     // Connect to the Chime meeting
-    const audioVideoElement = this.videoElement.nativeElement;
-    /*
+  /*const audioVideoElement = this.videoElement.nativeElement;
         this.meetingSession.audioVideo.start();
         this.meetingSession.audioVideo.addObserver({
           videoTileDidUpdate: (tileState: VideoTileState) => {

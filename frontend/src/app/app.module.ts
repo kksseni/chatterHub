@@ -14,6 +14,7 @@ import { CallPageFooterComponent } from './meeting/preview-page/call-page-footer
 import { CallPageComponent } from './meeting/preview-page/call-page/call-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { PreviewPageComponent } from './meeting/preview-page/preview-page.component';
+import { VideoConferenceComponent } from './video-call/video-call.component';
 
 const appRoutes: Routes = [
   {path: '',redirectTo: '/login', pathMatch: 'full'},
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
   {path: 'meets/:id', component: PreviewPageComponent},
   {path: 'meets/:id/attendee/:attendeeId', component: CallPageComponent},
   {path: 'chats', component: ChatsComponent},
+  {path: 'chating', component: VideoConferenceComponent},
   {path: 'meets', component: MeetingComponent},
   {path: '**', pathMatch: 'full', component: NotFoundPageComponent}
 ]
@@ -35,7 +37,8 @@ const appRoutes: Routes = [
     CallPageFooterComponent,
     CallPageComponent,
     NotFoundPageComponent,
-    PreviewPageComponent
+    PreviewPageComponent,
+    VideoConferenceComponent
   ],
     imports: [
         BrowserModule,
