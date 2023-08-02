@@ -4,19 +4,19 @@
 
       <div class="attendee h-100">
         <div class="micro-title">
-          <!--<i *ngIf="attendee.stream.getAudioTracks()[0].enabled" class="fa-solid fa-microphone"></i>
-          <i *ngIf="!attendee.stream.getAudioTracks()[0].enabled" class="fa-solid fa-microphone-slash"></i>-->
+          <i *ngIf="true" class="fa-solid fa-microphone"></i>
+          <i *ngIf="false" class="fa-solid fa-microphone-slash"></i>
         </div>
-       <!-- <div *ngIf="!attendee.stream.getVideoTracks()[0].enabled" class="user-title">
-          {{attendee.fname.substring(0, 1)}}
-        </div>-->
+        <div *ngIf="true" class="user-title">
+          G<!--{{attendee.fname.substring(0, 1)}}-->
+        </div>
         <video id="video-element-id" [class.tTdl5d]="getAttendees().length>=1"
-               [class.acRNtd]="getAttendees().length>1"
+               [class.acRNtd]="getAttendees().length>1" [srcObject]="stream"
                 autoplay>
         </video>
-       <!-- <div class="name-title">
-          {{attendee.fname}} {{attendee.lname}}
-        </div>-->
+        <div class="name-title">
+         Ann Ther <!--{{attendee.fname}} {{attendee.lname}}-->
+        </div>
       </div>
 
   </div>

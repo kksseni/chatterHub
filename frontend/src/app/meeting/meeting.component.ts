@@ -36,8 +36,8 @@ export class MeetingComponent implements OnInit {
     return this.meetService.newMeet().toPromise().then((res) => {
       // @ts-ignore
       this.meetingId = res.meetingId;
-      console.log(" this.meetingId =" + this.meetingId)
-      this.resMeet = res;
+      console.log(" this.meeting =" + res)
+      PreviewPageComponent.resMeeting = res;
     });
   }
 

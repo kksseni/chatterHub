@@ -1,11 +1,14 @@
 package com.imlemica.chattyhub.service;
 
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentialsProviderChain;
 import com.amazonaws.services.chime.AmazonChime;
 import com.amazonaws.services.chime.model.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -24,9 +27,9 @@ public class ChimeServiceImpl implements ChimeService {
     public Meeting createMeeting() {
         chime.createMeeting(new CreateMeetingRequest());
         CreateMeetingResult account = chime.createMeeting(new CreateMeetingRequest()
-                .withClientRequestToken("AXEXAMPLE")
+                .withClientRequestToken(UUID.randomUUID().toString())
                 .withMediaRegion("us-east-2")
-                .withExternalMeetingId("AXEXAMPLE"));
+                .withExternalMeetingId(UUID.randomUUID().toString()));
 
         return account.getMeeting();
     }

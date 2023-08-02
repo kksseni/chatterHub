@@ -31,6 +31,8 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
   fname: string | undefined;
   localStream: MediaStream | undefined;
   static attendeeId: string | undefined;
+  static externalUserId: string | undefined;
+  static joinToken: string | undefined;
 
   // @ts-ignore
   static cofg: MeetingSessionConfiguration;
@@ -78,7 +80,7 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
 
     this.meetingId = <string>this.route.snapshot.paramMap.get('id');
 
-    console.log("meet = " + this.meetingId)
+    console.log("meet = " + PreviewPageComponent.resMeeting)
     this.createAttendee();
 
     PreviewPageComponent.cofg = new MeetingSessionConfiguration(
@@ -97,7 +99,12 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
     this.meetService.newAttendee(this.meetingId).subscribe(async (res: Object) => {
       // @ts-ignore
       PreviewPageComponent.attendeeId = res.attendeeId;
+      // @ts-ignore
+      PreviewPageComponent.externalUserId = res.externalUserId;
+      // @ts-ignore
+      PreviewPageComponent.joinToken = res.joinToken;
       console.log("this.attendeeId =" + PreviewPageComponent.attendeeId)
+      console.log("this.attendee =" + JSON.stringify(res))
       this.resAttendee = res;
     })
   }
@@ -120,10 +127,6 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
       this.stream.getVideoTracks()[0].stop();
     }
     this.localStream = this.stream;
-    const logger = new ConsoleLogger('ChimeMeeting', LogLevel.INFO);
-    const deviceController = new DefaultDeviceController(logger);
-    PreviewPageComponent.cofg
-    this.meetingSession = new DefaultMeetingSession(PreviewPageComponent.cofg, logger, deviceController);
   }
 
   async joinMeeting() {

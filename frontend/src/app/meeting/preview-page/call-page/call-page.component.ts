@@ -4,7 +4,7 @@ import {
   ConsoleLogger, DefaultDeviceController,
   DefaultMeetingSession,
   DefaultMessagingSession,
-  LogLevel, MeetingSessionConfiguration,
+  LogLevel, MeetingSessionConfiguration, MeetingSessionCredentials,
   MessagingSessionConfiguration
 } from "amazon-chime-sdk-js";
 
@@ -18,7 +18,7 @@ import {PreviewPageComponent} from "../preview-page.component";
 })
 export class CallPageComponent implements OnInit, OnChanges {
   static attendees: { attendeeId: string; lname: string; fname: string; stream: MediaStream }[] = [];
-  private stream: any;
+  stream: any;
   private stream1: any;
   private stream2: any;
   private stream3: any;
@@ -39,7 +39,7 @@ export class CallPageComponent implements OnInit, OnChanges {
     this.attendeeId = <string>this.route.snapshot.paramMap.get('attendeeId');
     this.meetId = <string>this.route.snapshot.paramMap.get('id');
   }
-
+  localStream: MediaStream | undefined;
   ngOnChanges() {
     console.log("isAudio= " + this.isAudio)
     console.log("isVideo= " + this.isVideo)
@@ -49,7 +49,18 @@ export class CallPageComponent implements OnInit, OnChanges {
     const logger = new ConsoleLogger('SDK', LogLevel.INFO);
     const deviceController = new DefaultDeviceController(logger);
 
-    const configuration = PreviewPageComponent.cofg
+    let configuration = PreviewPageComponent.cofg
+
+    const constraints: MediaStreamConstraints = {audio: this.isAudio, video: this.isVideo};
+    this.stream = await navigator.mediaDevices.getUserMedia(constraints);
+    console.log("configuration = "+JSON.stringify(configuration))
+    if (PreviewPageComponent.attendeeId &&PreviewPageComponent.externalUserId && PreviewPageComponent.joinToken) {
+      let meet = new MeetingSessionCredentials()
+      meet.attendeeId = PreviewPageComponent.attendeeId
+      meet.externalUserId = PreviewPageComponent.externalUserId
+      meet.joinToken = PreviewPageComponent.joinToken
+      configuration.credentials = meet;
+    }
     this.meetingSession = new DefaultMeetingSession(
       configuration,
       logger,
@@ -71,6 +82,19 @@ export class CallPageComponent implements OnInit, OnChanges {
     videoInputDevices.forEach((mediaDeviceInfo: { deviceId: any; label: any; }) => {
       console.log(`Device ID: ${mediaDeviceInfo.deviceId} Microphone: ${mediaDeviceInfo.label}`);
     });
+    const audioInputDeviceInfo = audioInputDevices[0];
+    await this.meetingSession.audioVideo.startAudioInput(audioInputDeviceInfo.deviceId);
+
+    const audioOutputDeviceInfo = audioOutputDevices[0];
+    await this.meetingSession.audioVideo.chooseAudioOutput(audioOutputDeviceInfo.deviceId);
+
+    const videoInputDeviceInfo = videoInputDevices[1];
+    await this.meetingSession.audioVideo.startVideoInput(videoInputDeviceInfo.deviceId);
+
+    const audioElement = document.getElementById('video-element-id');
+    this.meetingSession.audioVideo.bindAudioElement(audioElement);
+
+    this.meetingSession.audioVideo.start();
     console.log("end")
   }
 
@@ -103,7 +127,6 @@ export class CallPageComponent implements OnInit, OnChanges {
     this.isCall = $event
     console.log(`this.meetId = ${this.meetId}, this.attendeeId = ${this.attendeeId}`)
     this.meetService.deleteAttendee(this.meetId, this.attendeeId).subscribe(async (res: any) => {
-
       }
     )
     this.router.navigate([`/meets`], {relativeTo: this.route});

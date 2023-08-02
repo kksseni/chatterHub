@@ -15,7 +15,8 @@ export class MeetService {
     return this.http.get<Object>(`${this.apiServiceUrl}/create`);
   }
   public newAttendee(meetingId: string | undefined): Observable<Object>{
-    let name = localStorage.getItem("firstname")
+    let name = this.create_UUID()
+    console.log(name)
     const formData = new FormData();
     // @ts-ignore
     formData.append('userId', name);
@@ -24,6 +25,15 @@ export class MeetService {
     return this.http.post<Object>(`${this.apiServiceUrl}/join`, formData);
   }
 
+  create_UUID(): string {
+    let dt = new Date().getTime();
+    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      const r = (dt + Math.random() * 16) % 16 | 0;
+      dt = Math.floor(dt / 16);
+      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+  }
   public deleteAttendee(meetingId: string | undefined, attendeeId: string | undefined): Observable<Object>{
     const formData = new FormData();
       // @ts-ignore
