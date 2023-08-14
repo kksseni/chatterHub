@@ -45,6 +45,7 @@ export class MeetingComponent implements OnInit {
   join() {
     console.log("meet ="+ this.meetingId)
     this.meetService.checkMeeting(this.meetingId).subscribe((res:any)=>{
+      PreviewPageComponent.resMeeting = res;
       this.router.navigate([`/meets/${this.meetingId}`], { relativeTo: this.route });
     },
       ()=>{

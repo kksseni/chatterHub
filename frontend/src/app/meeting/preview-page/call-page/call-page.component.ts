@@ -1,11 +1,11 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {Component, ElementRef, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {
   ConsoleLogger, DefaultDeviceController,
   DefaultMeetingSession,
   DefaultMessagingSession,
   LogLevel, MeetingSessionConfiguration, MeetingSessionCredentials,
-  MessagingSessionConfiguration
+  MessagingSessionConfiguration, VideoTile
 } from "amazon-chime-sdk-js";
 
 import {MeetService} from "../../meet.service";
@@ -46,6 +46,10 @@ export class CallPageComponent implements OnInit, OnChanges {
   }
 
   async prepare() {
+    if (this.meetingSession) {
+     console.log("Meeting already in progress");
+      return;
+    }
     const logger = new ConsoleLogger('SDK', LogLevel.INFO);
     const deviceController = new DefaultDeviceController(logger);
 
@@ -55,6 +59,7 @@ export class CallPageComponent implements OnInit, OnChanges {
     this.stream = await navigator.mediaDevices.getUserMedia(constraints);
     console.log("configuration = "+JSON.stringify(configuration))
     if (PreviewPageComponent.attendeeId &&PreviewPageComponent.externalUserId && PreviewPageComponent.joinToken) {
+      console.log("PreviewPageComponent.attendeeId &&PreviewPageComponent.externalUserId && PreviewPageComponent.joinToken")
       let meet = new MeetingSessionCredentials()
       meet.attendeeId = PreviewPageComponent.attendeeId
       meet.externalUserId = PreviewPageComponent.externalUserId
@@ -90,12 +95,71 @@ export class CallPageComponent implements OnInit, OnChanges {
 
     const videoInputDeviceInfo = videoInputDevices[1];
     await this.meetingSession.audioVideo.startVideoInput(videoInputDeviceInfo.deviceId);
+    let observer = {
+      // Tile State changed, so let's examine it.
+      videoTileDidUpdate: (tileState: { boundAttendeeId: any; }) => {
+        // if no attendeeId bound to tile, ignore it return
+        if (!tileState.boundAttendeeId) {
+          return;
+        }
+        //There is an attendee Id against the tile, and it's a valid meeting session, then update tiles view
+        if (!(this.meetingSession === null)) {
+          this.updateTiles();
+        }
+      },
+    };
+    this.meetingSession.audioVideo.addObserver(observer);
+    const audioOutputElement = document.getElementById("meeting-audio");
+    this.meetingSession.audioVideo.bindAudioElement(audioOutputElement);
+    //this.meetingSession.audioVideo.realtimeSubscribeToAttendeeIdPresence(attendeeObserver);
 
-    const audioElement = document.getElementById('video-element-id');
-    this.meetingSession.audioVideo.bindAudioElement(audioElement);
+ /*   const audioElement = document.getElementById('video-element-id');
+    this.meetingSession.audioVideo.bindAudioElement(audioElement);*/
 
     this.meetingSession.audioVideo.start();
+    this.meetingSession.audioVideo.startLocalVideoTile();
+
     console.log("end")
+  }
+  // @ts-ignore
+  tiles: { tileState: { tileId: any; boundExternalUserId: any; boundAttendeeId: string; }}[];
+  @ViewChild('videoList', { static: true }) videoListRef!: ElementRef;
+
+  updateTiles() {
+    console.log("ghghghghgh1")
+    const meetingSession = this.meetingSession; // Get your meeting session object here
+
+    this.tiles = meetingSession.audioVideo.getAllVideoTiles();
+    console.log("tiles.length = "+this.tiles.length)
+    this.tiles.forEach((tile: { tileState: { tileId: any; boundExternalUserId: any; boundAttendeeId: string; }; }) => {
+      const tileId = tile.tileState.tileId;
+      const boundExtUserId = tile.tileState.boundExternalUserId;
+
+      const divElement = document.getElementById('div-' + tileId);
+      if (!divElement) {
+        const videoElement = document.getElementById('video-' + tileId);
+       /* const videoElement = document.createElement('video');
+        videoElement.id = 'video-' + tileId;
+        videoElement.controls = true;*/
+
+      /*  const tileUserName = document.createElement('p');
+        tileUserName.style.color = 'blueviolet';
+        tileUserName.textContent = boundExtUserId.substring(0, boundExtUserId.indexOf('#'));
+
+        const newDivElement = document.createElement('div');
+        newDivElement.id = 'div-' + tileId;
+        newDivElement.setAttribute('name', 'div-' + tile.tileState.boundAttendeeId);
+        newDivElement.style.display = 'inline-block';
+        newDivElement.style.padding = '5px';
+        newDivElement.appendChild(tileUserName);
+        newDivElement.appendChild(videoElement);*/
+
+        /*this.videoListRef.nativeElement.appendChild(newDivElement);*/
+
+        meetingSession.audioVideo.bindVideoElement(tileId, videoElement);
+        console.log("ghghghghgh")
+      }
+    });
   }
 
   getAttendees() {
