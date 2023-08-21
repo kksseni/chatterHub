@@ -7,8 +7,13 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class MeetService {
-  private apiServiceUrl ="http://localhost:8080/meeting";
-  constructor(private http: HttpClient) { }
+  private apiServiceUrl ="https://d1fn4jog1mxuxv.cloudfront.net/meeting";
+
+  constructor(private http: HttpClient) {
+    if (window.location.href.startsWith("http://localhost:4200")){
+      this.apiServiceUrl = "http://localhost:8080/meeting";
+    }
+  }
 
   public newMeet(): Observable<Object>{
     const formData = new FormData();

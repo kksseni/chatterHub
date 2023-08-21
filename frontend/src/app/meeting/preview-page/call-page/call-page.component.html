@@ -1,17 +1,17 @@
 <div class="callpage-container">
   <app-call-page-header></app-call-page-header>
-  <div class="container row">
+  <div class="container row" #videoList>
     <audio style="display: none" id="meeting-audio"></audio>
     <div  class="attendee h-100" *ngFor="let tile of tiles">
       <div class="micro-title">
         <i *ngIf="true" class="fa-solid fa-microphone"></i>
         <i *ngIf="false" class="fa-solid fa-microphone-slash"></i>
       </div>
-      <!--<div *ngIf="true" class="user-title">
-        G&lt;!&ndash;{{attendee.fname.substring(0, 1)}}&ndash;&gt;
-      </div>-->
-      <video id="video-{{tile.tileState.tileId}}" [class.tTdl5d]="getAttendees().length>=1"
-             [class.acRNtd]="getAttendees().length>1" controls
+      <div *ngIf="!tile.state().active" class="user-title">
+        G<!--{{attendee.fname.substring(0, 1)}}-->
+      </div>
+      <video id="video-{{tile.state().tileId}}"
+             [class.acRNtd]="tiles.length>=1" controls
              autoplay>
       </video>
       <div class="name-title">

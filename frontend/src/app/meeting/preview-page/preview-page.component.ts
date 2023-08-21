@@ -1,15 +1,7 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {
-  ConsoleLogger,
-  DefaultDeviceController,
-  DefaultMeetingSession,
-  LogLevel,
-  MeetingSessionConfiguration, VideoTileState
-} from "amazon-chime-sdk-js";
+import {MeetingSessionConfiguration} from "amazon-chime-sdk-js";
 import {ActivatedRoute, Router} from "@angular/router";
-import {CallPageComponent} from "./call-page/call-page.component";
 import {MeetService} from "../meet.service";
-import { default as ChimeSDK, MeetingSession } from 'amazon-chime-sdk-js';
 
 @Component({
   selector: 'app-preview-page',

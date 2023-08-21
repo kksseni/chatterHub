@@ -18,32 +18,12 @@
           <i *ngIf="isAudio" class="fa-solid fa-microphone"></i>
           <i *ngIf="!isAudio" class="fa-solid fa-microphone-slash"></i>
         </button>
-        <div class="dropdown">
-          <button type="button" [class.orange]="!isVideo" class="btn dropbtn buttons-options btn-default btn-circle">
-            <i class="fa-solid fa-angle-down"></i>
-          </button>
-          <div class="dropdown-content">
-            <a class="dropdown-item" href="#">Link 1</a>
-            <a class="dropdown-item" href="#">Link 2</a>
-            <a class="dropdown-item" href="#">Link 3</a>
-          </div>
-        </div>
         <!--</div>-->
         <!--<div class="buttons-options">-->
         <button type="button" (click)="turnVideo()" [class.orange]="!isVideo" class="btn btn-default mr-2 btn-circle btn-xl">
           <i *ngIf="isVideo" class="fa-solid fa-video"></i>
           <i *ngIf="!isVideo" class="fa-solid fa-video-slash"></i>
         </button>
-        <div class="dropdown">
-          <button type="button" [class.orange]="!isVideo" class="btn dropbtn buttons-options btn-default btn-circle">
-            <i class="fa-solid fa-angle-down"></i>
-          </button>
-          <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
-        </div>
         <!--</div>-->
       </div>
     </div>

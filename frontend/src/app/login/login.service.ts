@@ -8,8 +8,12 @@ import {User} from "../domain/user";
   providedIn: 'root'
 })
 export class LoginService {
-  private apiServiceUrl ="http://localhost:8080";
-  constructor(private http: HttpClient) { }
+  private apiServiceUrl ="https://d1fn4jog1mxuxv.cloudfront.net";
+  constructor(private http: HttpClient) {
+    if (window.location.href.startsWith("http://localhost:4200")){
+      this.apiServiceUrl = "http://localhost:8080";
+    }
+  }
 
   public login(profile: Login): Observable<User>{
     return this.http.post<User>(`${this.apiServiceUrl}/login`, profile);

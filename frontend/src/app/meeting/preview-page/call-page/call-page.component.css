@@ -55,14 +55,14 @@ video{
   font-size: 65px;
   margin: auto;
   color: white;
-  background-color: #4cd137!important;
+  background-color: #ff8f00 !important;
   border-radius: 50%;
   justify-content: center;
   padding: 3.1rem 4rem;
   text-align: center;
   z-index: 0;
-  top: 30%;
-  left: 35%;
+  top: 17%;
+  left: 38%;
 }
 .tTdl5d {
   background-color: #ff0000;
