@@ -1,0 +1,42 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6 class="modal-title">Camera</h6>
+        <div *ngFor="let video of videos">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault1" [checked] ="video.deviceId===videoDeviceId"
+                   (change)="selectCamera(video.deviceId)">
+            <label class="form-check-label" for="flexRadioDefault1">
+              {{video.label}}
+            </label>
+          </div>
+        </div>
+        <h6 class="modal-title">Audio</h6>
+        <div *ngFor="let micro of micros">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" [checked] ="micro.deviceId===audioInputDeviceId"
+                   (change)="selectMicro(micro.deviceId)">
+            <label class="form-check-label" for="flexRadioDefault">
+              {{micro.label}}
+            </label>
+          </div>
+        </div>
+        <h6 class="modal-title">Headphones</h6>
+        <div *ngFor="let headphone of headphones">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" checked (change)="selectHeadphones(headphone.label)">
+            <label class="form-check-label" for="flexRadioDefault2">
+              {{headphone.label}}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,10 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {MeetingSessionConfiguration} from "amazon-chime-sdk-js";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MeetService} from "../meet.service";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import * as events from "events";
+import {WebcamComponent, WebcamImage, WebcamInitError} from "ngx-webcam";
 
 @Component({
   selector: 'app-preview-page',
@@ -26,6 +30,10 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
   static externalUserId: string | undefined;
   static joinToken: string | undefined;
 
+  videoDeviceId: string | undefined;
+  audioInputDeviceId: string | undefined;
+  audioOutputDeviceId: string | undefined;
+
   // @ts-ignore
   static cofg: MeetingSessionConfiguration;
   isMessenger: boolean;
@@ -33,25 +41,31 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
   resAttendee: any;
   isAudio: boolean;
   isVideo: boolean;
+
+  videoDevices: MediaDeviceInfo[] = [];
+  // @ts-ignore
+  videoOptions: MediaTrackConstraints;
   // @ts-ignore
   @ViewChild('videoElement') videoElement: ElementRef;
   // @ts-ignore
   @ViewChild('remoteVideoElement') remoteVideoElement: ElementRef;
-  private meetingSession: any;
   private stream: any;
   static resMeeting: any;
 
   constructor(
     private route: ActivatedRoute,
     private meetService: MeetService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     // @ts-ignore
     this.id = this.route.snapshot.params.id;
     this.isAdmin = window.location.hash === '#init';
     this.url = `${window.location.origin}${window.location.pathname}`;
     this.alertTimeout = null;
-
+    // @ts-ignore
+    this.videoOptions = {facingMode: 'en', deviceId:  localStorage.getItem("videoInputDevice")};
+    console.log(" this.videoOptions = " +  this.videoOptions.deviceId)
     this.messageList = [];
     this.streamObj = null;
     this.screenCastStream = null;
@@ -65,22 +79,22 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
     this.fname = localStorage.getItem("fname") || 'Guest';
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.isAdmin) {
       this.meetInfoPopup = true;
     }
-
     this.meetingId = <string>this.route.snapshot.paramMap.get('id');
+    if(!PreviewPageComponent.resMeeting){
+      await this.meetService.checkMeeting(this.meetingId).subscribe((res:any)=>{
+        PreviewPageComponent.resMeeting = res;
+        console.log("PreviewPageComponent.resMeeting = "+ PreviewPageComponent.resMeeting)
+      } )
+    }
 
     console.log("meet = " + PreviewPageComponent.resMeeting)
-    this.createAttendee();
 
-    PreviewPageComponent.cofg = new MeetingSessionConfiguration(
-      PreviewPageComponent.resMeeting,
-      this.resAttendee
-    );
-    this.prepare()
-
+   /* this.videoOptions = {facingMode: 'environment', deviceId: this.videoDeviceId};
+    console.log("this.videoDeviceId = " + this.videoDeviceId)*/
   }
 
   ngOnDestroy() {
@@ -122,75 +136,16 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
   }
 
   async joinMeeting() {
-    // Connect to the Chime meeting
-  /*const audioVideoElement = this.videoElement.nativeElement;
-        this.meetingSession.audioVideo.start();
-        this.meetingSession.audioVideo.addObserver({
-          videoTileDidUpdate: (tileState: VideoTileState) => {
-            if (tileState.localTile) {
-              // @ts-ignore
-              meetingSession.audioVideo.bindVideoElement(tileState.localTile.id, audioVideoElement);
-            } else {
-              // @ts-ignore
-              const tileIndex = this.attendees.findIndex((attendee) => attendee.attendeeId === tileState.tileId);
-              if (tileIndex !== -1) {
-                const videoElement = this.remoteVideoElement.nativeElement;
-                if (tileState.tileId != null) {
-                  this.meetingSession.audioVideo.bindVideoElement(tileState.tileId, videoElement);
-                }
-              }
-            }
-          },
-          videoTileWasRemoved: (tileId: number) => {
-            // @ts-ignore
-            const tileIndex = this.attendees.findIndex((attendee) => attendee.attendeeId === tileId);
-            if (tileIndex !== -1) {
-              CallPageComponent.attendees.splice(tileIndex, 1);
-            }
-          },
-        });*/
+    this.createAttendee();
+    PreviewPageComponent.cofg = new MeetingSessionConfiguration(
+      PreviewPageComponent.resMeeting,
+      this.resAttendee
+    );
     await this.router.navigate([`/meets/${this.meetingId}/attendee/${PreviewPageComponent.attendeeId}`], {relativeTo: this.route});
-  }
-
-  async getRecieverCode() {
-
-  }
-
-  initWebRTC() {
-
   }
 
   getAttendeeId() {
     return PreviewPageComponent.attendeeId
-  }
-
-  sendMsg($event: any) {
-
-  }
-
-  screenShare() {
-
-  }
-
-  stopScreenShare() {
-  }
-
-  toggleAudio($event: any) {
-  }
-
-  disconnectCall() {
-  }
-
-  setIsMessenger($event: any) {
-
-  }
-
-  setMeetInfoPopup($event: any) {
-
-  }
-
-  setMessageAlert($event: any) {
-
   }
 
   turnVideo() {
@@ -200,10 +155,12 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
 
   turnAudio() {
     this.isAudio = !this.isAudio
-    //this.meetingSession.audioVideo.realtimeUnmuteLocalAudio(this.isAudio);
     this.prepare()
-    //this.joinMeeting()
   }
 
+  private async initSettings() {
+    let mediaStream = await navigator.mediaDevices.getUserMedia({audio: this.isAudio, video: this.isVideo});
+    this.videoDeviceId =   localStorage.getItem("videoInputDevice") || mediaStream.getVideoTracks()[0].label
+    this.audioInputDeviceId = localStorage.getItem("audioInputDevice") || mediaStream.getAudioTracks()[0].label
+  }
 }
-

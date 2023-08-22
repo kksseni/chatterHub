@@ -32,13 +32,14 @@ export class CallPageComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
     this.prepare()
     this.attendeeId = <string>this.route.snapshot.paramMap.get('attendeeId');
     this.meetId = <string>this.route.snapshot.paramMap.get('id');
 
-    window.onload = () => {
+    /*window.onload = () => {
       this.onIsCallChange(false)
-    };
+    };*/
   }
 
   localStream: MediaStream | undefined;
@@ -79,25 +80,16 @@ export class CallPageComponent implements OnInit, OnChanges {
     const audioOutputDevices = await this.meetingSession.audioVideo.listAudioOutputDevices();
     const videoInputDevices = await this.meetingSession.audioVideo.listVideoInputDevices();
 
-    console.log("start")
-    // An array of MediaDeviceInfo objects
-    audioInputDevices.forEach((mediaDeviceInfo: { deviceId: any; label: any; }) => {
-      console.log(`Device ID: ${mediaDeviceInfo.deviceId} audioInputDevices: ${mediaDeviceInfo.label}`);
-    });
-    audioOutputDevices.forEach((mediaDeviceInfo: { deviceId: any; label: any; }) => {
-      console.log(`Device ID: ${mediaDeviceInfo.deviceId} audioOutputDevices: ${mediaDeviceInfo.label}`);
-    });
-    videoInputDevices.forEach((mediaDeviceInfo: { deviceId: any; label: any; }) => {
-      console.log(`Device ID: ${mediaDeviceInfo.deviceId} videoInputDevices: ${mediaDeviceInfo.label}`);
-    });
-    const audioInputDeviceInfo = audioInputDevices[0];
+    const audioInputDeviceInfo =  audioInputDevices[0];
     await this.meetingSession.audioVideo.startAudioInput(audioInputDeviceInfo.deviceId);
 
     const audioOutputDeviceInfo = audioOutputDevices[0];
     await this.meetingSession.audioVideo.chooseAudioOutput(audioOutputDeviceInfo.deviceId);
 
-    const videoInputDeviceInfo = videoInputDevices[0];
-    await this.meetingSession.audioVideo.startVideoInput(videoInputDeviceInfo.deviceId);
+    const videoInputDeviceInfo = localStorage.getItem("videoInputDevice") || videoInputDevices[0].deviceId
+    console.log("AAAAAAAAAAAAAAAAAAAAA = "+ videoInputDeviceInfo)
+    await this.meetingSession.audioVideo.startVideoInput(videoInputDeviceInfo);
+
     this.tiles = await this.meetingSession.audioVideo.getAllVideoTiles();
     let observer = {
       videoTileDidUpdate: (tileState: { boundAttendeeId: any; }) => {
@@ -110,15 +102,9 @@ export class CallPageComponent implements OnInit, OnChanges {
     this.meetingSession.audioVideo.addObserver(observer);
     const audioOutputElement = document.getElementById("meeting-audio");
     this.meetingSession.audioVideo.bindAudioElement(audioOutputElement);
-    //this.meetingSession.audioVideo.realtimeSubscribeToAttendeeIdPresence(attendeeObserver);
-
-    /*   const audioElement = document.getElementById('video-element-id');
-       this.meetingSession.audioVideo.bindAudioElement(audioElement);*/
 
     this.meetingSession.audioVideo.start();
     this.meetingSession.audioVideo.startLocalVideoTile();
-
-    console.log("end")
   }
 
   // @ts-ignore
@@ -164,8 +150,8 @@ export class CallPageComponent implements OnInit, OnChanges {
     this.isVideo = $event
     if (this.isVideo) {
       const videoInputDevices = await this.meetingSession.audioVideo.listVideoInputDevices();
-      const videoInputDeviceInfo = videoInputDevices[1];
-      await this.meetingSession.audioVideo.startVideoInput(videoInputDeviceInfo.deviceId);
+      const videoInputDeviceInfo = localStorage.getItem("videoInputDevice") || videoInputDevices[1].deviceId
+      await this.meetingSession.audioVideo.startVideoInput(videoInputDeviceInfo);
       this.meetingSession.audioVideo.start()
       this.meetingSession.audioVideo.startLocalVideoTile()
     } else this.meetingSession.audioVideo.stopVideoInput()

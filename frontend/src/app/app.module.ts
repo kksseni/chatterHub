@@ -15,6 +15,11 @@ import { CallPageComponent } from './meeting/preview-page/call-page/call-page.co
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { PreviewPageComponent } from './meeting/preview-page/preview-page.component';
 import { VideoConferenceComponent } from './video-call/video-call.component';
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatRadioModule} from "@angular/material/radio";
+import {WebcamModule} from "ngx-webcam";
+import { SettingsModalComponent } from './meeting/preview-page/settings-modal/settings-modal.component';
 
 const appRoutes: Routes = [
   {path: '',redirectTo: '/login', pathMatch: 'full'},
@@ -38,15 +43,20 @@ const appRoutes: Routes = [
     CallPageComponent,
     NotFoundPageComponent,
     PreviewPageComponent,
-    VideoConferenceComponent
+    VideoConferenceComponent,
+    SettingsModalComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        RouterModule.forRoot(appRoutes),
-        ReactiveFormsModule,
-        FormsModule
-    ],
+  imports: [
+    MatDialogModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    WebcamModule,
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule,
+    FormsModule,
+    MatRadioModule
+  ],
   providers: [LoginService],
   bootstrap: [AppComponent]
 })

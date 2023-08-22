@@ -8,9 +8,21 @@
       <div *ngIf="!isVideo" class="user-title">
         {{fname?.substring(0, 1)}}
       </div>
-      <div class="video-preview">
-        <video #videoElement [srcObject]="localStream" width="1000" height="800" autoplay></video>
+      <div class="settings">
+      <button type="button" class="btn dropbtn btn-default btn-circle"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button>
       </div>
+      <div class="video-preview">
+        <div *ngIf="isVideo">
+          <webcam
+            [width]="1100"
+            [height]="800"
+            [videoOptions]="videoOptions"
+          ></webcam>
+        </div>
+      </div>
+
       <!-- Replace the src attribute with a sample video or image -->
       <div class="buttons-section">
         <!--<div class="buttons-options">-->
@@ -47,3 +59,4 @@
     </div>
   </div>
 </div>
+<app-settings-modal></app-settings-modal>
