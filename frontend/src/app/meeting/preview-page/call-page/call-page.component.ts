@@ -32,14 +32,13 @@ export class CallPageComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
     this.prepare()
     this.attendeeId = <string>this.route.snapshot.paramMap.get('attendeeId');
     this.meetId = <string>this.route.snapshot.paramMap.get('id');
 
-    /*window.onload = () => {
+    window.onload = () => {
       this.onIsCallChange(false)
-    };*/
+    };
   }
 
   localStream: MediaStream | undefined;
@@ -87,7 +86,6 @@ export class CallPageComponent implements OnInit, OnChanges {
     await this.meetingSession.audioVideo.chooseAudioOutput(audioOutputDeviceInfo.deviceId);
 
     const videoInputDeviceInfo = localStorage.getItem("videoInputDevice") || videoInputDevices[0].deviceId
-    console.log("AAAAAAAAAAAAAAAAAAAAA = "+ videoInputDeviceInfo)
     await this.meetingSession.audioVideo.startVideoInput(videoInputDeviceInfo);
 
     this.tiles = await this.meetingSession.audioVideo.getAllVideoTiles();
@@ -112,7 +110,6 @@ export class CallPageComponent implements OnInit, OnChanges {
   @ViewChild('videoList', {static: true}) videoListRef!: ElementRef;
 
   updateTiles() {
-    console.log("ghghghghgh1")
     const meetingSession = this.meetingSession; // Get your meeting session object here
 
     this.tiles = meetingSession.audioVideo.getAllVideoTiles();
