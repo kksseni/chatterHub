@@ -112,6 +112,11 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
       console.log("this.attendeeId =" + PreviewPageComponent.attendeeId)
       console.log("this.attendee =" + JSON.stringify(res))
       this.resAttendee = res;
+      PreviewPageComponent.cofg = new MeetingSessionConfiguration(
+        PreviewPageComponent.resMeeting,
+        this.resAttendee
+      );
+      this.router.navigate([`/meets/${this.meetingId}/attendee/${PreviewPageComponent.attendeeId}`], {relativeTo: this.route});
     })
   }
 
@@ -137,11 +142,6 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
 
   async joinMeeting() {
     this.createAttendee();
-    PreviewPageComponent.cofg = new MeetingSessionConfiguration(
-      PreviewPageComponent.resMeeting,
-      this.resAttendee
-    );
-    await this.router.navigate([`/meets/${this.meetingId}/attendee/${PreviewPageComponent.attendeeId}`], {relativeTo: this.route});
   }
 
   getAttendeeId() {

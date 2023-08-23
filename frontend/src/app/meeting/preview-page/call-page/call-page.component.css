@@ -1,4 +1,4 @@
-.container{
+.container1{
   background-color: #3c3f42;
   display: inline-flex;
   height: 92%;
@@ -18,7 +18,7 @@ video{
   position: absolute;
   color: white;
   font-size: 22px;
-  margin-top: -40px;
+  margin-top: -50px;
   margin-left: 20px;
   z-index: 1000;
 }
@@ -38,7 +38,7 @@ video{
   position: absolute;
   font-size: 17px;
   margin-top: 15px;
-  margin-right: 15px;
+  margin-right: 150px!important;
   color: white;
   right: 0;
   border-radius: 50%;

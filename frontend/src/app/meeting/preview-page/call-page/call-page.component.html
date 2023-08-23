@@ -1,8 +1,8 @@
 <div class="callpage-container">
   <app-call-page-header></app-call-page-header>
-  <div class="container row" #videoList>
+  <div class="container1 row" #videoList>
     <audio style="display: none" id="meeting-audio"></audio>
-    <div  class="attendee h-100" *ngFor="let tile of tiles">
+    <div  class="attendee h-100 col-md-4" *ngFor="let tile of tiles">
       <div class="micro-title">
         <i *ngIf="true" class="fa-solid fa-microphone"></i>
         <i *ngIf="false" class="fa-solid fa-microphone-slash"></i>
@@ -15,7 +15,7 @@
              autoplay>
       </video>
       <div class="name-title">
-        Ann Ther <!--{{attendee.fname}} {{attendee.lname}}-->
+        Attend = {{tile.id()}} <!--{{attendee.fname}} {{attendee.lname}}-->
       </div>
     </div>
   </div>
