@@ -22,6 +22,8 @@
     "@angular/router": "^14.2.0",
     "@aws-sdk/client-chime-sdk-messaging": "^3.379.1",
     "@types/offscreencanvas": "^2019.7.0",
+    "ngx-clipboard": "^16.0.0",
+    "ngx-copy-to-clipboard": "^2.3.0",
     "ngx-webcam": "^0.4.1",
     "rxjs": "~7.5.0",
     "simple-peer": "^9.11.1",

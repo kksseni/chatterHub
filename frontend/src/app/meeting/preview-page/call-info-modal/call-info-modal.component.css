@@ -1,0 +1,47 @@
+.modal-body{
+  font-family: Roboto,Arial,sans-serif;
+  line-height: 1.25rem;
+  font-size: .975rem;
+  letter-spacing: .0142857143em;
+  font-weight: 400;
+  padding: 20px 24px 20px 24px;
+}
+.modal-content{
+border-radius: 0.5rem!important;
+}
+.modal-dialog{
+  margin-top: 10%;
+  width: 18%;
+  border-radius: 25%;
+}
+.copy{
+  padding-top: 5%;
+  font-size: 25px;
+  right: 0;
+}
+.copy:hover{
+  cursor: pointer;
+  color: orange;
+}
+.links{
+  margin-right: 10%;
+}
+.join-info{
+  width: 100%;
+  display: inline-flex;
+}
+.description{
+  color: rgb(95,99,104);
+  margin-bottom: 0.75rem;
+}
+.tMjy2d {
+  font-weight: 500;
+  margin-right: 0.125rem;
+}
+.VA2JSc{
+  color: rgb(32,33,36);
+}
+textarea {
+  display: block;
+  margin: 4px 0 8px;
+}

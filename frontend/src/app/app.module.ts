@@ -20,6 +20,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatRadioModule} from "@angular/material/radio";
 import {WebcamModule} from "ngx-webcam";
 import { SettingsModalComponent } from './meeting/preview-page/settings-modal/settings-modal.component';
+import { CallInfoModalComponent } from './meeting/preview-page/call-info-modal/call-info-modal.component';
+import {NgxCopyToClipboardModule} from "ngx-copy-to-clipboard";
+import {ClipboardModule} from "ngx-clipboard";
 
 const appRoutes: Routes = [
   {path: '',redirectTo: '/login', pathMatch: 'full'},
@@ -44,7 +47,8 @@ const appRoutes: Routes = [
     NotFoundPageComponent,
     PreviewPageComponent,
     VideoConferenceComponent,
-    SettingsModalComponent
+    SettingsModalComponent,
+    CallInfoModalComponent
   ],
   imports: [
     MatDialogModule,
@@ -55,9 +59,14 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
     FormsModule,
-    MatRadioModule
+    MatRadioModule,
+    NgxCopyToClipboardModule,
+    ClipboardModule
   ],
   providers: [LoginService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    ClipboardModule,
+  ]
 })
 export class AppModule {}
