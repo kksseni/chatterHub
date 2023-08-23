@@ -14,19 +14,18 @@
       </button>
       </div>
       <div class="video-preview">
-        <div *ngIf="isVideo">
-          <webcam
+        <div>
+          <webcam *ngIf="isVideo"
             [width]="1100"
             [height]="800"
-            [videoOptions]="videoOptions"
-          ></webcam>
+            [videoOptions]="videoOptions"></webcam>
         </div>
       </div>
 
       <!-- Replace the src attribute with a sample video or image -->
       <div class="buttons-section">
         <!--<div class="buttons-options">-->
-        <button type="button" (click)="turnAudio()" [class.orange]="!isVideo || !isAudio" class="btn btn-default btn-circle btn-xl">
+        <button type="button" (click)="turnAudio()" [class.orange]="!isAudio" class="btn btn-default btn-circle btn-xl">
           <i *ngIf="isAudio" class="fa-solid fa-microphone"></i>
           <i *ngIf="!isAudio" class="fa-solid fa-microphone-slash"></i>
         </button>
